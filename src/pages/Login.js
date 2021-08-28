@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,12 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
 import {useStyles} from "../Styles";
-import UserContext from "../store/Context";
 import {useHistory} from "react-router-dom";
 
-var jwt = require('jsonwebtoken');
 const axios = require('axios');
-
 
 export default function Login() {
     let history = useHistory();
@@ -38,30 +35,7 @@ export default function Login() {
             })
     }
 
-
     const classes = useStyles();
-
-    function jtoken() {
-        jwt.verify(localStorage.getItem('jwt'), process.env.REACT_APP_ACCESS_TOKEN, function (err, decoded) {
-            if (err) {
-                console.log('Invalid Token');
-                setLogin(false)
-            }
-            if (decoded) {
-                console.log(decoded)
-                setLogin(true)
-            }
-        });
-    }
-    useEffect(() => {
-        jtoken()
-    }, [])
-    //  console.log({'validation':validation})
-    const {isLogin, setLogin} = useContext(UserContext);
-    // console.log(isLogin)
-    if (isLogin) {
-        history.push("/addPosts")
-    }
 
     return (
         <Container component="main" maxWidth="xs">

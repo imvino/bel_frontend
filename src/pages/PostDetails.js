@@ -4,24 +4,20 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import {useStyles,Loading} from "../Styles";
-import {
-    useParams
-} from "react-router-dom";
+import {Loading, useStyles} from "../Styles";
+import {useParams} from "react-router-dom";
 
 const axios = require('axios');
 
 export default function PostDetails() {
     const classes = useStyles();
-    const [list,setList]= useState(null);
-let slug = useParams()
-    console.log(slug)
-    useEffect(()=>{
-
-        axios.get(process.env.REACT_APP_SERVER+'/post/'+slug.id)
+    const [list, setList] = useState(null);
+    let slug = useParams()
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_SERVER + '/post/' + slug.id)
             .then(function (response) {
                 // handle success
-                if(response.status === 200){
+                if (response.status === 200) {
                     setList(response.data)
                 }
             })
@@ -29,7 +25,7 @@ let slug = useParams()
                 // handle error
                 console.log(error);
             })
-    },[slug.id])
+    }, [slug.id])
 
     return (
         <React.Fragment>
@@ -45,7 +41,7 @@ let slug = useParams()
                 <Container className={classes.cardGrid} maxWidth="md">
                     {/* End hero unit */}
                     <Grid container spacing={4}>
-                        {!list ? <Loading/> : list.map((val,i) => (
+                        {!list ? <Loading/> : list.map((val, i) => (
                             <Grid item key={i} xs={12} sm={12} md={12}>
                                 <Card className={classes.card}>
                                     <CardContent className={classes.cardContent}>

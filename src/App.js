@@ -18,22 +18,19 @@ import AddPosts from "./pages/AddPosts";
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import {useHistory} from "react-router-dom";
 import Password from "./pages/Password";
-
+import Validation from "./store/Validation";
 function App(props) {
-
-    const [isLogin,setLogin] = useState(true)
+    let val = Validation()
+    let login = val?.id ? true : false;
+    const [isLogin,setLogin] = useState(login)
     const [anchorEl, setAnchorEl] = React.useState(null);
-    let history = useHistory();
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-
     const handleClose = () => {
         setAnchorEl(null);
     };
-
     const Logout = ()=>{
         localStorage.clear()
         window.location.replace('/')
@@ -52,7 +49,7 @@ function App(props) {
                             </Typography>
                             <Link variant="body2" className={classes.menuLink} href={'/'} >Home</Link>
                             <Link variant="body2" className={classes.menuLink}  href={'/addPosts'} >New Post</Link>
-                            {!isLogin ?<Link variant="body2" className={classes.menuLink} href={'/login'}>Login</Link> :
+                            {!login ?<Link variant="body2" className={classes.menuLink} href={'/login'}>Login</Link> :
                                 <>
                                 <Button style={{backgroundColor: '#fff'}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                 Admin
@@ -73,21 +70,22 @@ function App(props) {
                     </AppBar>
                 </div>
                 {/*To switch between components*/}
-
                 <Switch>
                     <Route path="/"  exact={true} component={Home}/>
-                    <Route path="/login"  exact={true} component={Login}/>
                     <Route path="/post/:id" exact={true} component={PostDetails}/>
                     <Route path="/password" exact={true} render={props=>(
-                        isLogin ?
-                            <Password/>:<Redirect to={'/login'}/>
+                        login ?
+                            <Password/>:  <Redirect to={'/login'}/>
                     )}/>
                     <Route path="/addPosts" exact={true} render={props=>(
-                        !isLogin ?
-                        <Redirect to={'/login'}/> : <AddPosts/>
+                        login ?
+                        <AddPosts/> : <Redirect to={'/login'}/>
+                    )}/>
+                    <Route path="/login" exact={true} render={props=>(
+                        login ?
+                            <Redirect to={'/addPosts'}/> : <Login/>
                     )}/>
                 </Switch>
-
             </div>
         </Router>
         </UserContext.Provider>
