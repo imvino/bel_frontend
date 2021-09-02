@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
@@ -7,7 +7,7 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import {useStyles} from "../Styles";
-
+import {UserContext} from "../store/Context";
 
 
 function AddPosts(props) {
@@ -16,7 +16,11 @@ function AddPosts(props) {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [alertBox, setAlertBox] = useState(null)
+    const {isLogin,setLogin} = useContext(UserContext)
 
+    useEffect(()=>{
+        console.log(isLogin)
+    },[isLogin])
     function handleSubmit(event) {
         setAlertBox(null)
         event.preventDefault();

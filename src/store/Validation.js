@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 var jwt = require('jsonwebtoken');
 
 function Validation(props) {
-    const [info, setInfo] = useState({id: '0'})
+    const [info, setInfo] = useState(false)
 
     function jtoken() {
         jwt.verify(localStorage.getItem('jwt'), process.env.REACT_APP_ACCESS_TOKEN, function (err, decoded) {

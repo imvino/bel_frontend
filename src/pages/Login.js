@@ -8,16 +8,17 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
 import {useStyles} from "../Styles";
-import {useHistory} from "react-router-dom";
-
 const axios = require('axios');
 
 export default function Login() {
-    let history = useHistory();
+
     const [user, setUser] = useState('')
     const [pass, setPass] = useState('')
     const [alertBox, setAlertBox] = useState(null)
 
+    // useEffect(()=>{
+    //   return   isLogin ?  window.location.href = "/addPosts" : null
+    // },[isLogin])
     function handleSubmit(event) {
         event.preventDefault();
         setAlertBox(null)
@@ -27,7 +28,7 @@ export default function Login() {
                     setAlertBox({status: 'error', msg: 'Invalid Username/Password'})
                 }
                 localStorage.setItem('jwt', response.data.token)
-                return history.push("/addPosts")
+                 window.location.href = "/addPosts";
             })
             .catch(function (error) {
                 // handle error

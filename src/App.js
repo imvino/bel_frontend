@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -9,7 +9,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import UserContext from "./store/Context";
+import {UserProvider} from "./store/Context";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import PostDetails from "./pages/PostDetails";
@@ -23,7 +23,9 @@ import Validation from "./store/Validation";
 function App(props) {
     let val = Validation()
     let login = val?.id ? true : false;
-    const [isLogin,setLogin] = useState(login)
+
+
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -37,11 +39,12 @@ function App(props) {
     }
     const classes = useStyles();
     return (
-        <UserContext.Provider value={{isLogin,setLogin}}>
+        <UserProvider >
         <Router>
             <div>
                 <div className={classes.root}>
                     {/*For navigation bar*/}
+                    {/*{ console.log({login,isLogin})}*/}
                     <AppBar position="static">
                         <Toolbar>
                             <Typography variant="h6" className={classes.title}>
@@ -49,7 +52,7 @@ function App(props) {
                             </Typography>
                             <Link variant="body2" className={classes.menuLink} href={'/'} >Home</Link>
                             <Link variant="body2" className={classes.menuLink}  href={'/addPosts'} >New Post</Link>
-                            {!login ?<Link variant="body2" className={classes.menuLink} href={'/login'}>Login</Link> :
+                            {!login?<Link variant="body2" className={classes.menuLink} href={'/login'}>Login</Link> :
                                 <>
                                 <Button style={{backgroundColor: '#fff'}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                 Admin
@@ -88,7 +91,7 @@ function App(props) {
                 </Switch>
             </div>
         </Router>
-        </UserContext.Provider>
+        </UserProvider>
     );
 }
 
