@@ -54,9 +54,7 @@ function App(props) {
                             <Link variant="body2" className={classes.menuLink}  href={'/addPosts'} >New Post</Link>
                             {!login?<Link variant="body2" className={classes.menuLink} href={'/login'}>Login</Link> :
                                 <>
-
-                                <Button style={{backgroundColor: '#333'}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-
+                                <Button style={{backgroundColor: '#fff'}} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                 Admin
                                 </Button>
                                 <Menu
